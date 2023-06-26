@@ -9,4 +9,12 @@ const mysql = new Sq.Sequelize(database,username,password,{
     dialect : 'mysql'
 });
 
+// const {Model} = Sq;
+
+// class User extends Model{
+    
+// };
+
+// User.init({},{Sq});
+
 module.exports = mysql;
