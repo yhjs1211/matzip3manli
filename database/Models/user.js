@@ -10,6 +10,10 @@ const User = mysql.define('user',{
         allowNull:false,
         primaryKey:true
     },
+    name:{
+        type:Datatypes.STRING,
+        allowNull:false
+    },
     nickname:{
         type:Datatypes.STRING,
         unique:true,
@@ -19,20 +23,20 @@ const User = mysql.define('user',{
         type:Datatypes.STRING,
         allowNull:false
     },
-    phone:{
-        type:Datatypes.INTEGER,
+    email:{
+        type:Datatypes.STRING,
         allowNull:false
     },
     imageURL:{
         type:Datatypes.STRING,
         allowNull:true
     },
-    email:{
-        type:Datatypes.STRING,
-        allowNull:true
-    },
     introduce:{
         type:Datatypes.TEXT,
+        allowNull:true
+    },
+    phone:{
+        type:Datatypes.INTEGER,
         allowNull:true
     }
 });

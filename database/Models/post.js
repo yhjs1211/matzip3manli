@@ -9,6 +9,10 @@ const Post = mysql.define('post',{
         primaryKey:true,
         allowNull:false
     },
+    nickname:{
+        type:Datatypes.STRING,
+        allowNull:false
+    },
     restaurantName:{
         type:Datatypes.STRING,
         allowNull:false
@@ -28,6 +32,10 @@ const Post = mysql.define('post',{
     like:{
         type:Datatypes.INTEGER,
         defaultValue:0
+    },
+    foodImgURL:{
+        type:Datatypes.STRING,
+        allowNull:true
     }
 });
 

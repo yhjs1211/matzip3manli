@@ -23,9 +23,10 @@ app.get('/',(req, res, next) => {
    res.status(200).json({
     path:{
         user:{
-            1: 'POST /signup 회원가입',
-            2: 'POST /login 로그인',
-            3: 'GET /logout 로그아웃'
+            1: 'POST /users/signup 회원가입',
+            2: 'POST /users/login 로그인',
+            3: 'GET /users/logout 로그아웃',
+            4: 'PUT /users/:userId 유저 프로필 수정'
         },
         post:{
             1: 'GET /posts 게시글 전체 조회',
