@@ -20,12 +20,6 @@ app.use(cookieParser());
 app.use(express.static('static'));
 
 app.get('/', (req, res, next) => {
-    res.status(200).render('index.html');
-});
-
-app.use('/', router);
-
-app.get('/', (req, res, next) => {
     res.status(200).json({
         path: {
             user: {
@@ -52,6 +46,8 @@ app.get('/', (req, res, next) => {
         },
     });
 });
+
+app.use('/', router);
 
 //sequelize를 사용해서 MYSQL 데이터베이스와 동기화하는 역할을 수행
 (async () => {

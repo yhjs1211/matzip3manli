@@ -13,4 +13,6 @@ router.get('/logout', userController.logout);
 
 router.post('/:userId', validator.updateUser, userController.update);
 
+
 module.exports = router;
+
