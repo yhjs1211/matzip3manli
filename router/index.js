@@ -5,21 +5,21 @@ const usersRouter = require('./users.routes.js');
 
 const defalutRouter = [
     {
-        path : '/posts',
-        route : postsRouter
+        path: '/posts',
+        route: postsRouter,
     },
     {
-        path : '/comments',
-        route : commentsRouter
+        path: '/comments',
+        route: commentsRouter,
     },
     {
-        path : '/users',
-        route : usersRouter
+        path: '/users',
+        route: usersRouter,
     },
 ];
 
-defalutRouter.forEach(r=>{
-    router.use(r.path,r.route);
+defalutRouter.forEach((r) => {
+    router.use(r.path, r.route);
 });
 
-module.exports=router;
+module.exports = router;
