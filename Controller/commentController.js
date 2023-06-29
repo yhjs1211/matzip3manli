@@ -59,9 +59,11 @@ module.exports = {
         const { comment } = req.body;
         const { commentId } = req.params;
         try {
-            await Comment.update({ comment }, { where: { id: commentId } });
-
-            res.status(200).json({ message: '댓글 수정 완료' });
+            const updatedComment = await Comment.update({ comment }, { where: { id: commentId } }).then((c) => {
+                return c;
+            });
+            console.log(updatedComment);
+            res.status(200).json(JSON.stringify(updatedComment));
         } catch (err) {
             console.error(err);
             res.status(500).json({ message: '서버 에러' });
