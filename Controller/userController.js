@@ -1,84 +1,86 @@
 const jwt = require('jsonwebtoken');
 const User = require('../database/Models/user.js');
 const config = require('../config.js');
-const {secretKey, expireIn} = config.jwt;
+const { secretKey, expireIn } = config.jwt;
 const bcrypt = require('bcrypt');
 const validator = require('express-validator');
 
 module.exports = {
-    create : async (req, res, next) => {
-        const {nickname,name,email,phone,imageURL,password} = req.body;
-        const foundData = await User.findOne({where:{nickname}});
-        if(!foundData){
-            const hashedPassword = bcrypt.hashSync(password,config.bcrypt.salt);
+    create: async (req, res, next) => {
+        const { nickname, name, email, phone, imageURL, password } = req.body;
+        const foundData = await User.findOne({ where: { nickname } });
+        if (!foundData) {
+            const hashedPassword = bcrypt.hashSync(password, config.bcrypt.salt);
 
             const created = await User.create({
                 nickname,
-                password:hashedPassword,
+                password: hashedPassword,
                 name,
                 email,
                 phone,
-                imageURL
-            }).then(d=>{return d});
+                imageURL,
+            }).then((d) => {
+                return d;
+            });
 
             return res.status(201).json(created.toJSON());
-        }else{
+        } else {
             return res.status(400).json({
-                Success:false,
-                message:"이미 존재하는 닉네임 입니다."
+                Success: false,
+                message: '이미 존재하는 닉네임 입니다.',
             });
         }
     },
-    login : async (req, res) => {
-        const {email,password} = req.body;
+    login: async (req, res) => {
+        const { email, password } = req.body;
         try {
-            const foundData = await User.findOne({where:{email}});
-            const match = bcrypt.compareSync(password,foundData.dataValues.password);
+            const foundData = await User.findOne({ where: { email } });
+            const match = bcrypt.compareSync(password, foundData.dataValues.password);
 
-            if(match){
-                const token = await jwt.sign({
-                    userId:foundData.dataValues.id
-                }
-                ,secretKey
-                ,{expiresIn:expireIn});
-                res.cookie('Authorization','Bearer '+token);
+            if (match) {
+                const token = await jwt.sign(
+                    {
+                        userId: foundData.dataValues.id,
+                    },
+                    secretKey,
+                    { expiresIn: expireIn }
+                );
+                res.cookie('Authorization', 'Bearer ' + token);
                 res.status(200).json({
-                    token:token,
-                    message:"로그인 되었습니다."
+                    token: token,
+                    message: '로그인 되었습니다.',
                 });
-            }else{
+            } else {
                 res.status(400).json({
-                    message:"닉네임과 비밀번호가 일치하지 않습니다."
+                    message: '닉네임과 비밀번호가 일치하지 않습니다.',
                 });
             }
         } catch (e) {
             console.error(e);
             res.status(400).json({
-                message:"Bad Request"
+                message: 'Bad Request',
             });
         }
     },
-    logout : (req, res) => {
+    logout: (req, res) => {
         res.clearCookie('Authorization');
         res.redirect('/');
     },
-    update : async (req, res) => {
+    update: async (req, res) => {
         const id = req.params.userId;
-        const {nickname,imageURL,introduce,phone} = req.body;
-        
-        if(!nickname && !imageURL && !introduce && !phone){
-            res.status(400).json({message:"업데이트 할 정보를 입력해주세요."});
-        }else{
+        const { nickname, imageURL, introduce, phone } = req.body;
+
+        if (!nickname && !imageURL && !introduce && !phone) {
+            res.status(400).json({ message: '업데이트 할 정보를 입력해주세요.' });
+        } else {
             try {
                 const foundUser = await User.findByPk(id);
-                if(foundUser){
+                if (foundUser) {
                     // await User.update(,{where:id})
-                }else{
-                    res.status(404).json({message:"회원 정보를 찾을 수 없습니다."});
+                } else {
+                    res.status(404).json({ message: '회원 정보를 찾을 수 없습니다.' });
                 }
-            } catch (e) {
-                
-            }
+            } catch (e) {}
         }
-    }
+    },
 };
