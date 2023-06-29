@@ -7,7 +7,7 @@ const postController = require('../Controller/postController');
 router.post('/', defaultValidate.createPost, postController.create);
 
 //게시글 지역별 조회
-router.get('/', postController.getPostsByZone);
+router.get('/zone', postController.getPostsByZone);
 
 // 게시글 조회
 router.get('/', postController.getPosts);

@@ -21,7 +21,7 @@ module.exports = {
     const { zone } = req.query;
     try {
       const postsZone = await Post.findAll({
-        attributes: ['id', 'restaurantName', 'like', 'menu', 'createdAt'],
+        attributes: ['restaurantName', 'like', 'menu', 'createdAt'],
         where: { zone },
       });
       res.status(200).json(postsZone);
