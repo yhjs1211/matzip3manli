@@ -1,10 +1,10 @@
 const variable = {
 
   db: {
-    host: '',
-    username: '',
-    password: '',
-    database: '',
+    host: 'express-database.cjx2t84z9jyl.ap-northeast-2.rds.amazonaws.com',
+    username: 'root',
+    password: '20211211',
+    database: 'matzip',
   },
   jwt: {
     secretKey: 'matzip-3manli',

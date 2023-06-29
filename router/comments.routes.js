@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const isAuth = require('../Middleware/auth.js');
 const commentController = require('../controller/commentController.js');
-const validation = require('../middleware/validation.js');
-// const isAuth = require('../middleware/auth.js');
+const validation = require('../Middleware/validation.js');
+
 
 //게시물 댓글 조회
 router.get('/:postId', isAuth, commentController.getCommentsByPostId);

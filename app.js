@@ -18,7 +18,10 @@ const models = require('./database/Models/index.js');
 // request data middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+    origin:'*',
+    credentials:true
+}));
 app.use(express.static('static'));
 
 app.get('/', (req, res, next) => {

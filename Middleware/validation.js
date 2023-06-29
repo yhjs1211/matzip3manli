@@ -1,6 +1,6 @@
 const validator = require('express-validator');
 
-const { cookie, query, param, body, validationResult } = validator;
+const { body, validationResult } = validator;
 
 //단일 요청에 유효성 검사
 const validate = function (req, res, next) {
@@ -84,6 +84,10 @@ const defaultValidate = {
     CommentUser: [
         body('comment').trim().isLength({ min: 3 }).withMessage('댓글은 최소 3글자 이상 작성 부탁드립니다.'),
         validate,
+    ],
+    verifyEmail:[
+        body('email','유효한 E-mail 주소를 입력해주세요.').isEmail().normalizeEmail(),
+        validate
     ],
 };
 

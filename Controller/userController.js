@@ -4,6 +4,7 @@ const config = require('../config.js');
 const { secretKey, expireIn } = config.jwt;
 const bcrypt = require('bcrypt');
 const validator = require('express-validator');
+const mailsender = require('../mail/mail.js');
 
 module.exports = {
     create: async (req, res, next) => {
@@ -72,6 +73,7 @@ module.exports = {
         const { nickname, imageURL, introduce, phone } = req.body;
 
         if (!nickname && !imageURL && !introduce && !phone) {
+            console.log(req.url);
             res.status(400).json({ message: '업데이트 할 정보를 입력해주세요.' });
         } else {
             try {
@@ -84,4 +86,14 @@ module.exports = {
             } catch (e) {}
         }
     },
+    mail : (req, res) => {
+        const email = req.body.email;
+        
+        const verifyNum = mailsender.sendKakaoMail(email);
+
+        res.status(200).json({
+            verifyNum:`${verifyNum}`,
+            message:"인증메일이 전송되었습니다."
+        })
+    }
 };
