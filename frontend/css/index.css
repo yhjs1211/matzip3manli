@@ -1,0 +1,7 @@
+body{
+    display: grid;
+}
+
+#signupForm, #loginForm{
+    text-align: right;
+}
