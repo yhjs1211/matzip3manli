@@ -1,7 +1,10 @@
+//사용자가 로그인을 성공하면, 서버는 해당 사용자에 대한 JWT를 생성하고 클라이언트에게 전달
 const jwt = require('jsonwebtoken');
 const Comment = require('../database/Models/comment.js');
 const config = require('../config.js');
+//secretKey는 jwt서명에 사용되는 비밀키, expireIn는 토큰의 만료시간
 const { secretKey, expireIn } = config.jwt;
+// bcrypt는 비밀번호 해싱에 사용되는 알고리즘
 const bcrypt = require('bcrypt');
 
 module.exports = {
@@ -37,15 +40,15 @@ module.exports = {
     //댓글 생성
     create: async (req, res, next) => {
         //댓글 작성에 필요한값만 가져오기 위해 postId와 comment 값을 가져온다.
-        const { comment, nickname } = req.body;
+        const { postId, comment, nickname } = req.body;
         //req.user으로 현재 로그인 사용자 정보에 접근해서 id를 가져옴
-        const { id, postId } = req.user;
+        const userId = req.user.id;
 
         try {
             const newComment = await Comment.create({
                 nickname,
                 comment,
-                userId: id,
+                userId,
                 postId,
             }).then((v) => {
                 return v;
