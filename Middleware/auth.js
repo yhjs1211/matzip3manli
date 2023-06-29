@@ -4,7 +4,7 @@ const config = require('../config.js');
 
 async function isAuth(req, res, next) {
   const auth = req.cookies.Authorization;
-  console.log(typeof auth);
+
   if (!auth || !auth.startsWith('Bearer')) {
     return res.status(400).json({ message: '로그인 먼저 해주세요.' });
   }
