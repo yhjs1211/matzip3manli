@@ -68,6 +68,19 @@ const defaultValidate = {
             .optional({ nullable: true, checkFalsy: true }),
         validate,
     ],
+    createPost: [
+        body('restaurantName').trim().notEmpty().withMessage('식당 이름을 입력해주세요.'),
+        body('zone').trim().notEmpty().withMessage('지역을 설정해주세요.'),
+        body('menu').trim().notEmpty().withMessage('메뉴를 한 가지 이상 입력해주세요.'),
+        body('content')
+            .trim()
+            .notEmpty()
+            .withMessage('내용을 입력해주세요.')
+            .isLength({ min: 10 })
+            .withMessage('10자 이상을 입력하셔야 합니다.'),
+        body('foodImgURL').trim().isURL().withMessage('이미지 URL을 입력해주세요.'),
+        validate,
+    ],
     CommentUser: [
         body('comment').trim().isLength({ min: 3 }).withMessage('댓글은 최소 3글자 이상 작성 부탁드립니다.'),
         validate,

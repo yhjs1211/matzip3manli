@@ -4,7 +4,7 @@ const config = require('../config.js');
 
 async function isAuth(req, res, next) {
     const auth = req.cookies.Authorization;
-    if (!auth || !auth.startswith('Bearer')) {
+    if (!auth || !auth.startsWith('Bearer')) {
         return res.status(400).json({ message: '로그인 먼저 해주세요.' });
     }
 
@@ -14,7 +14,7 @@ async function isAuth(req, res, next) {
         const payload = await jwt.verify(token, config.jwt.secretKey);
         if (payload) {
             const userId = payload.userId;
-            const foundUser = await User.findByPk(userId, { attributes: { nickname, name, email } });
+            const foundUser = await User.findByPk(userId);
 
             if (foundUser) {
                 res.locals.foundUser = foundUser.dataValues;
@@ -31,7 +31,7 @@ async function isAuth(req, res, next) {
         console.error(e);
         res.status(400).json({ message: 'Error!' });
     }
-    upstream / main;
+    // upstream / main;
 }
 
 module.exports = isAuth;
