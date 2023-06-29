@@ -9,10 +9,10 @@ const Post = mysql.define('post', {
     primaryKey: true,
     allowNull: false,
   },
-  // nickname:{
-  //     type:Datatypes.STRING,
-  //     allowNull:false
-  // },
+  nickname: {
+    type: Datatypes.STRING,
+    allowNull: false,
+  },
   restaurantName: {
     type: Datatypes.STRING,
     allowNull: false,

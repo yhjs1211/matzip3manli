@@ -1,18 +1,21 @@
 const jwt = require('jsonwebtoken');
 const Post = require('../database/Models/post.js');
+const User = require('../database/Models/user.js');
 const config = require('../config.js');
 const { secretKey, expireIn } = config.jwt;
 const bcrypt = require('bcrypt');
 
 module.exports = {
   create: async (req, res, next) => {
-    const { restaurantName, zone, menu, content, like, foodImgURL } = req.body;
+    const foundUser = res.locals.foundUser; // 해당하는 User의 모든 데이터
+    const { restaurantName, zone, menu, content, foodImgURL } = req.body;
     await Post.create({
       restaurantName,
+      userId: foundUser.id,
+      nickname: foundUser.nickname,
       zone,
       menu,
       content,
-      like,
       foodImgURL,
     });
     res.status(200).json({ messeage: '게시글 업로드 성공!' });
@@ -49,7 +52,7 @@ module.exports = {
         attributes: [
           'id',
           'restaurantName',
-          // 'nickname',
+          'nickname',
           'zone',
           'menu',
           'content',
@@ -70,10 +73,15 @@ module.exports = {
   },
   update: async (req, res, next) => {
     const { id } = req.params;
+    const foundUser = res.locals.foundUser;
     const { restaurantName, zone, menu, content, foodImgURL } = req.body;
+    const foundPost = await Post.findOne({ where: { id } });
 
     try {
-      const [updatePost] = await Post.update(
+      if (foundUser.id !== foundPost.userId) {
+        return res.status(401).json({ Message: '수정할 권한이 없습니다.' });
+      }
+      await Post.update(
         { restaurantName, zone, menu, content, foodImgURL },
         {
           where: { id },
@@ -87,7 +95,12 @@ module.exports = {
   },
   delete: async (req, res, next) => {
     const { id } = req.params;
+    const foundUser = res.locals.foundUser;
+    const foundPost = await Post.findOne({ where: { id } });
     try {
+      if (foundUser.id !== foundPost.userId) {
+        return res.status(401).json({ Message: '삭제할 권한이 없습니다.' });
+      }
       await Post.destroy({
         where: { id },
       });
