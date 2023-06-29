@@ -64,7 +64,8 @@ module.exports = {
     },
     logout: (req, res) => {
         res.clearCookie('Authorization');
-        res.redirect('/');
+        res.render(__dirname+'/index.html');
+        res.end();
     },
     update: async (req, res) => {
         const id = req.params.userId;
