@@ -5,24 +5,14 @@ const options = {
   },
 };
 
-const urlParams = new URLSearchParams(window.location.search);
-const id = urlParams.get('id');
-
-// 버튼 눌러서 fetch 가져오는 함수..
-const call = async () => {
-  const postsList = await fetch(`http://localhost:3030/posts/6`, options).then(
-    (res) => {
-      return res.json();
-    }
-  );
-  console.log(postsList);
-};
-
 // 상세 게시글 조회
 const callPostInfo = async () => {
-  const postList = await fetch('http://localhost:3030/posts/6', options).then(
-    (res) => res.json()
-  );
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get('id');
+  const postList = await fetch(
+    `http://localhost:3030/posts/${id}`,
+    options
+  ).then((res) => res.json());
 
   const { restaurantName, nickname, content, menu, zone, foodImgURL } =
     postList.data;
@@ -43,42 +33,41 @@ const testModal = function click(e) {
   addEventListener('click', click);
 };
 // 게시글의 댓글 입력
-async function commentWrite(event) {
-  event.preventDefault(); // 기본 동작인 폼 제출 방지
+// async function commentWrite(event) {
+//   event.preventDefault(); // 기본 동작인 폼 제출 방지
 
-  const commentInput = document.getElementById('comment-input');
-  const comment = commentInput.value;
+//   const commentInput = document.getElementById('comment-input');
+//   const comment = commentInput.value;
 
-  const obj = {
-    comment: comment,
-  };
-  const postOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(obj),
-  };
-  try {
-    const fetchedData = await fetch(
-      'http://localhost:3030/comments/6',
-      postOptions
-    );
-    const responseData = await fetchedData.json();
-    console.log(responseData);
-    // 댓글 입력 후 새로운 댓글 목록을 불러오는 함수 호출
-    callComments();
+//   const obj = {
+//     comment: comment,
+//   };
+//   const postOptions = {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(obj),
+//   };
+//   try {
+//     const fetchedData = await fetch(
+//       'http://localhost:3030/comments/6',
+//       postOptions
+//     );
+//     const responseData = await fetchedData.json();
+//     console.log(responseData);
+//     // 댓글 입력 후 새로운 댓글 목록을 불러오는 함수 호출
+//     callComments();
 
-    // 입력 필드 초기화
-    commentInput.value = '';
-  } catch (e) {
-    console.error(e);
-  }
-}
+//     // 입력 필드 초기화
+//     commentInput.value = '';
+//   } catch (e) {
+//     console.error(e);
+//   }
+// }
 // 게시글의 댓글 조회
 const callComments = async () => {
-  const id = 6; // 테스트하려고 넣음
-  // const id = urlParams.get('id');
+  const id = urlParams.get('id');
   const commentsList = await fetch(
     `http://localhost:3030/comments/${id}`,
     options

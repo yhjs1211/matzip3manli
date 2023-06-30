@@ -4,7 +4,7 @@ const config = require('../config.js');
 const { secretKey, expireIn } = config.jwt;
 const bcrypt = require('bcrypt');
 const validator = require('express-validator');
-// const mailsender = require('../mail/mail.js');
+const mailsender = require('../mail/mail.js');
 
 module.exports = {
   create: async (req, res, next) => {
@@ -68,6 +68,7 @@ module.exports = {
     res.render(__dirname + '/index.html');
     res.end();
   },
+  getUser: (req, res) => {},
   update: async (req, res) => {
     const id = req.params.userId;
     const { nickname, imageURL, introduce, phone } = req.body;
