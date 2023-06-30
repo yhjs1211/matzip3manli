@@ -18,7 +18,12 @@ const models = require('./database/Models/index.js');
 // request data middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors()); // => CORS 허용 (라이브러리 사용)
+app.use(
+  cors({
+    origin: '*',
+    credentials: true,
+  })
+);
 app.use(express.static('static'));
 
 app.get('/', (req, res, next) => {

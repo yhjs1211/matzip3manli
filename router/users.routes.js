@@ -11,8 +11,12 @@ router.post('/login', validator.loginUser, userController.login);
 
 router.get('/logout', userController.logout);
 
+router.post('/mail',validator.verifyEmail, userController.mail);
+
 router.post('/:userId', validator.updateUser, userController.update);
+
 
 
 module.exports = router;
 
+ 
