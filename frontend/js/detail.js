@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
   const id = new URL(location.href).searchParams.get('id');
-  console.log('id =>', id);
   const option = {
     method: 'GET',
     headers: {
@@ -10,7 +9,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const post = await fetch(`http://localhost:3030/posts/${id}`, option).then(
     (d) => d.json()
   );
-  console.log(post.data);
 });
 
 // 상세 게시글 조회
@@ -39,7 +37,6 @@ const callPostInfo = async () => {
 
   const foodImg = document.getElementById('foodImg');
   foodImg.src = foodImgURL;
-  console.log('체크체크', postList);
 };
 callPostInfo();
 
@@ -55,9 +52,8 @@ async function postUpdate() {
       'Content-Type': 'application/json',
       Authorization: localStorage.getItem('Authorization'),
     },
-    body: JSON.stringify({ obj }),
+    body: JSON.stringify(obj),
   };
-  console.log('체크', obj);
   try {
     const fetchedData = await fetch(
       `http://localhost:3030/posts/${id}`,
@@ -65,9 +61,28 @@ async function postUpdate() {
     ).then((d) => {
       return d.json();
     });
-    console.log(fetchedData);
+    window.location.reload();
   } catch (e) {
     console.error(e);
+  }
+}
+// 게시글 삭제
+async function postDelete() {
+  const confirmed = confirm('게시글을 삭제하시겠습니까?');
+  if (confirmed) {
+    const id = new URL(location.href).searchParams.get('id');
+    const option = {
+      method: 'DELETE',
+      headers: {
+        accept: 'application/json',
+        Authorization: localStorage.getItem('Authorization'),
+      },
+    };
+    const deletePost = await fetch(
+      `http://localhost:3030/posts/${id}`,
+      option
+    ).then((d) => d.json());
+    window.location.href = 'index.html';
   }
 }
 
@@ -113,7 +128,6 @@ const callComments = async () => {
     `http://localhost:3030/comments/${id}`,
     options
   ).then((res) => res.json());
-  console.log(commentsList);
 
   const commentsListElement = document.querySelector('#comment-list');
   commentsList.forEach((data) => {
@@ -124,8 +138,55 @@ const callComments = async () => {
                                               <strong class="text-dark">${data.nickname}</strong>
                                             </div>
                                             <span class="d-block">${data.comment}</span>
+                                            <a href="#" onclick="commentUpdate(${data.id}; return false;)">수정</a>
+                                            <a href="#" onclick="commentDelete(${data.id} return false;)">삭제</a>
                                           </div>
                                       </div>`;
   });
 };
 callComments();
+
+// 게시글의 댓글 수정
+async function commentUpdate(id) {
+  const obj = {};
+  const updateComment = prompt('수정할 내용을 입력하세요');
+  obj.comment = updateComment;
+  const option = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localStorage.getItem('Authorization'),
+    },
+    body: JSON.stringify(obj),
+  };
+  try {
+    const fetchedData = await fetch(
+      `http://localhost:3030/comments/${id}`,
+      option
+    ).then((d) => {
+      return d.json();
+    });
+    window.location.reload();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+// 게시글의 댓글 삭제
+async function commentDelete(id) {
+  const confirmed = confirm('댓글을 삭제하시겠습니까?');
+  if (confirmed) {
+    const option = {
+      method: 'DELETE',
+      headers: {
+        accept: 'application/json',
+        Authorization: localStorage.getItem('Authorization'),
+      },
+    };
+    const deleteComment = await fetch(
+      `http://localhost:3030/comments/${id}`,
+      option
+    ).then((d) => d.json());
+    window.location.reload();
+  }
+}
