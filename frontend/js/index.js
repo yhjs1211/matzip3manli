@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+
 async function moveDetail(tag) {
   const id = tag.getAttribute('alt');
   location.href = `detail.html?id=${id}`;
@@ -20,6 +21,7 @@ async function readyPage(descType = undefined) {
     },
     // body:JSON.stringify({"descType":descType})
   };
+
 
   const posts = (
     await fetch('http://localhost:3030/posts/list', option).then((d) =>
@@ -47,7 +49,84 @@ async function readyPage(descType = undefined) {
     // }
   });
 }
+//포스트 생성
+async function newPosts() {
+  const obj = {};
+  obj.restaurantName = $('#restaurantName').val();
+  obj.content = $('#restaurantComment').val();
+  obj.zone = $('#restaurantLocation').val();
+  obj.menu = $('#restaurantMenu').val();
+  obj.foodImgURL = $('#restaurantImageURL').val();
 
+  const option = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: localStorage.getItem('Authorization'),
+    },
+
+    body: JSON.stringify(obj),
+  };
+  try {
+    const fetchedData = await fetch('http://localhost:3030/posts', option).then((d) => {
+      return d.json();
+    });
+    console.log(fetchedData);
+    location.reload();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+// 카드 타이틀 검색 함수
+function filterCards() {
+  const searchInput = document.getElementById('searchInput');
+  const searchValue = searchInput.value.trim().toLowerCase();
+  const cards = document.querySelectorAll('#cardContainer .card-container');
+
+
+  cards.forEach((card) => {
+    const title = card.querySelector('.card-title').textContent.toLowerCase();
+    if (title.includes(searchValue)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+async function signup() {
+  if (!document.getElementById('verifyEmailBtn').disabled) {
+    return alert('E-mail 인증 먼저 진행해주세요.');
+  }
+  const obj = {};
+  obj.nickname = $('#signupId').val();
+  obj.password = $('#signupPw').val();
+  obj.confirm = $('#signupConfirm').val();
+  obj.email = $('#signupEmail').val();
+  obj.phone = $('#signupPhone').val();
+  obj.imageURL = $('#signupImgURL').val();
+  obj.name = $('#signupName').val();
+  obj.introduce = $('#signupIntroduce').val();
+  const option = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(obj),
+  };
+
+  try {
+    const fetchedData = await fetch('http://localhost:3030/users/signup', option).then((d) => {
+      return d.json();
+    });
+
+    console.log(fetchedData);
+  } catch (e) {
+    console.error(e);
+  }
+}
 readyPage();
 
 document.getElementById('profileBtn').addEventListener('click', () => {
@@ -79,6 +158,7 @@ async function signup() {
   };
 
   try {
+
     const fetchedData = await fetch(
       'http://localhost:3030/users/signup',
       option
@@ -103,6 +183,7 @@ async function login() {
     body: JSON.stringify(obj),
   };
 
+
   try {
     const fetchedData = await fetch(
       'http://localhost:3030/users/login',
@@ -110,7 +191,6 @@ async function login() {
     ).then((d) => {
       return d.json();
     });
-
     window.localStorage.setItem('Authorization', 'Bearer ' + fetchedData.token);
     window.location.reload();
   } catch (e) {
