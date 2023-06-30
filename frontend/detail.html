@@ -1,34 +1,197 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <link rel="stylesheet" href="./css/detail.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>맛집찾아 삼만리 - 상세페이지</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-</head>
-<body>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <!-- js파일 연결 -->
+    <script type="text/javascript" src="./js/detail.js"></script>
+    <!-- 아래는 부트스트랩 -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.0.js"
+      integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+      crossorigin="anonymous"
+    ></script>
+    <!-- 스크립트를 맨 아래로 뺸 이유? -->
+  </head>
+  <body>
+    <!-- 첫 시작을 header로 안하시고 nav로 하신 이유? -->
     <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="http://localhost:3030/">맛집 3만리</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="#">회원가입</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">로그인</a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+      <div class="container-fluid">
+        <a class="navbar-brand" href="./index.html">맛집 3만리</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#">회원가입</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">로그인</a>
+            </li>
+          </ul>
+          <form class="d-flex" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <!-- 내용 붙일 자리 -->
+    <main>
+      <button type="button" onclick="call()">콜 버튼</button>
+      <div class="post-card">
+        <div class="row align-items-md-stretch">
+          <div class="col-md-6">
+            <div class="h-100 p-4 bg-body-tertiary border rounded-3">
+              <h2 id="restaurantName">Restaurant Name</h2>
+              <p id="nickname">nickname</p>
+              <p id="content">content</p>
+              <p id="menu">menu</p>
+              <p id="zone">zone</p>
+              <button class="btn btn-dark" type="button" onclick="updatePost()">
+                수정하기
+              </button>
+
+              <button class="btn btn-dark" type="button">삭제하기</button>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+              <img
+                id="foodImg"
+                src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20200905_271%2F1599296691857tdoVh_JPEG%2Fr6tC2j4W2TIb5Hy6pg0KNoHG.jpeg.jpg"
+                alt="detailimg"
+                max
+                width="100%"
+                height="auto"
+              />
+            </div>
           </div>
         </div>
-      </nav>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-</body>
+      </div>
+      <form class="comment">
+        <div class="form-floating">
+          <input
+            type="email"
+            class="form-control"
+            id="floatingInput"
+            placeholder="댓글을 입력해주세요"
+            style="width: 800px"
+          />
+          <label for="floatingInput">댓글 입력하는 자리</label>
+        </div>
+        <button class="btn btn-outline-success" type="submit">등록하기</button>
+      </form>
+      <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <h6 class="border-bottom pb-2 mb-0">댓글 달리는 자리</h6>
+        <div class="d-flex text-body-secondary pt-3">
+          <svg
+            class="bd-placeholder-img flex-shrink-0 me-2 rounded"
+            width="32"
+            height="32"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="Placeholder: 32x32"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          >
+            <title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#007bff"></rect>
+            <text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text>
+          </svg>
+          <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+            <div class="d-flex justify-content-between">
+              <strong class="text-gray-dark">Nickname</strong>
+            </div>
+            <span class="d-block">댓글 내용</span>
+          </div>
+        </div>
+        <div class="d-flex text-body-secondary pt-3">
+          <svg
+            class="bd-placeholder-img flex-shrink-0 me-2 rounded"
+            width="32"
+            height="32"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="Placeholder: 32x32"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          >
+            <title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#007bff"></rect>
+            <text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text>
+          </svg>
+          <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+            <div class="d-flex justify-content-between">
+              <strong class="text-gray-dark">Nickname</strong>
+            </div>
+            <span class="d-block">댓글 내용</span>
+          </div>
+        </div>
+        <div class="d-flex text-body-secondary pt-3">
+          <svg
+            class="bd-placeholder-img flex-shrink-0 me-2 rounded"
+            width="32"
+            height="32"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="Placeholder: 32x32"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          >
+            <title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#007bff"></rect>
+            <text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text>
+          </svg>
+          <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+            <div class="d-flex justify-content-between">
+              <strong class="text-gray-dark">Nickname</strong>
+            </div>
+            <span class="d-block">댓글 내용</span>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- 회원가입 확인 Modal-->
+    <div
+      class="modal fade"
+      id="testModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+    <footer></footer>
+    <script>
+    </script>
+  </body>
 </html>

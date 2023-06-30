@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const app = express();
 
@@ -17,43 +18,44 @@ const models = require('./database/Models/index.js');
 // request data middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors()); // => CORS 허용 (라이브러리 사용)
 app.use(express.static('static'));
 
 app.get('/', (req, res, next) => {
-    res.status(200).json({
-        path: {
-            user: {
-                1: 'POST /users/signup 회원가입',
-                2: 'POST /users/login 로그인',
-                3: 'GET /users/logout 로그아웃',
-                4: 'PUT /users/:userId 유저 프로필 수정',
-            },
-            post: {
-                1: 'GET /posts 게시글 전체 조회',
-                2: 'GET /posts?zone= 지역별 조회',
-                3: 'GET /posts/:postId 게시글 상세 조회',
-                4: 'POST /posts 게시글 작성',
-                5: 'PUT /posts/:postId 게시글 수정',
-                6: 'DELETE /posts/:postId 게시글 삭제',
-            },
-            comment: {
-                1: 'GET /comments/:postId 게시글 상세 댓글 조회',
-                2: 'GET /comments/:userId 유저가 작성한 댓글 조회',
-                3: 'POST /comments/:postId 댓글 작성',
-                4: 'PUT /comments/:commentId 댓글 수정',
-                5: 'DELETE /comments/:commentId 댓글 삭제',
-            },
-        },
-    });
+  res.status(200).json({
+    path: {
+      user: {
+        1: 'POST /users/signup 회원가입',
+        2: 'POST /users/login 로그인',
+        3: 'GET /users/logout 로그아웃',
+        4: 'PUT /users/:userId 유저 프로필 수정',
+      },
+      post: {
+        1: 'GET /posts 게시글 전체 조회',
+        2: 'GET /posts?zone= 지역별 조회',
+        3: 'GET /posts/:postId 게시글 상세 조회',
+        4: 'POST /posts 게시글 작성',
+        5: 'PUT /posts/:postId 게시글 수정',
+        6: 'DELETE /posts/:postId 게시글 삭제',
+      },
+      comment: {
+        1: 'GET /comments/:postId 게시글 상세 댓글 조회',
+        2: 'GET /comments/:userId 유저가 작성한 댓글 조회',
+        3: 'POST /comments/:postId 댓글 작성',
+        4: 'PUT /comments/:commentId 댓글 수정',
+        5: 'DELETE /comments/:commentId 댓글 삭제',
+      },
+    },
+  });
 });
 
 app.use('/', router);
 
 //sequelize를 사용해서 MYSQL 데이터베이스와 동기화하는 역할을 수행
 (async () => {
-    await mysql.sync().then(() => {
-        app.listen(config.port, () => {
-            console.log(`${config.port} is running..`);
-        });
+  await mysql.sync().then(() => {
+    app.listen(config.port, () => {
+      console.log(`${config.port} is running..`);
     });
+  });
 })();
