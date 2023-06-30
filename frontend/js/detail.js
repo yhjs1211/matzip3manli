@@ -1,12 +1,12 @@
-const { response } = require('express');
-
-const postURL = 'localhost:3030/posts';
-
-function getPosts(url) {
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((error) => console.log('error:', error));
+document.addEventListener("DOMContentLoaded",async ()=>{
+  const id = new URL(location.href).searchParams.get('id');
+  console.log('id =>',id);
+  const option = {
+    method:"GET",
+    headers:{
+        "Content-Type":"application/json"
+    },
 }
-
-getPosts(postURL);
+const post = await fetch(`http://localhost:3030/posts/${id}`,option).then(d=>d.json());
+console.log(post.data);
+});
