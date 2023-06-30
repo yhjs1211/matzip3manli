@@ -68,6 +68,9 @@ module.exports = {
         res.render(__dirname+'/index.html');
         res.end();
     },
+    getUser:(req, res) => {
+        
+    },
     update: async (req, res) => {
         const id = req.params.userId;
         const { nickname, imageURL, introduce, phone } = req.body;
