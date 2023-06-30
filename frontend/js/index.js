@@ -6,31 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
     showButton(false);
   }
 });
-async function consoleposts(descType = undefined) {
-  const option = {
-    method: 'POST', // POST 로 변경 예정
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    // body:JSON.stringify({"descType":descType})
-  };
 
-async function moveDetail(tag){
-    const id = tag.getAttribute('alt');
-    location.href=`detail.html?id=${id}`;
+async function moveDetail(tag) {
+  const id = tag.getAttribute('alt');
+  location.href = `detail.html?id=${id}`;
 }
-
-async function readyPage(descType=undefined){
-    const option={
-        method:"GET", // POST 로 변경 예정
-        headers:{
-            "Content-Type":"application/json"
-        },
-        // body:JSON.stringify({"descType":descType})
-    };
-  console.log(posts);
-}
-consoleposts();
 
 async function readyPage(descType = undefined) {
   const option = {
@@ -50,60 +30,29 @@ async function readyPage(descType = undefined) {
   const container = document.getElementsByClassName('card-container')[0];
 
   posts.forEach((data) => {
-    // if(data.foodImgURL){
-    //     container.innerHTML+=
-    //     `
-    //     <div class="card-container">
-    //     <div class="card" style="width: 12rem">
-    //         <a href="./detail.html">
-    //         <img src="${data.foodImgURL}" class="card-img-top" alt="..." />
-    //         </a>
-    //         <div class="card-body">
-    //         <h4 class="card-title">${data.restaurantName}</h4>
-    //         <p class="card-text">${data.content}</p>
-    //         </div>
-    //         <div class="card-footer">
-    //         <p>
-    //             작성자 : ${data.nickname}, 좋아요 : ${data.like}
-    //         </p>
-    //         </div>
-    //     </div>
-    //     </div>
-    //     `
-    // }else{
     container.innerHTML += `
-            <div class="card-container" id="${data.id}">
-                <div class="card" style="width: 12rem">
-                <img src="./img/No_image.jpeg" onclick="move"class="card-img-top" alt="${data.id}" />
-    const container = document.getElementsByClassName('card-container')[0];
-    
-    posts.forEach(data=>{
-            container.innerHTML+=
-            `
             <div class="card" style="width: 12rem">
                 <img src="./img/No_image.jpeg" onclick="moveDetail(this)" class="card-img-top" alt="${data.id}" />
                 <div class="card-body">
-                    <h4 class="card-title">${data.restaurantName}</h4>
-                    <p class="card-text">${data.id}</p>
-                    </div>
-                    <div class="card-footer">
-                    <p>
-                        작성자 : ${data.nickname}, 좋아요 : ${data.like}
-                    </p>
+                <h4 class="card-title">${data.restaurantName}</h4>
+                <p class="card-text">${data.content}</p>
                 </div>
+                <div class="card-footer">
+                <p>
+                    작성자 : ${data.nickname}, 좋아요 : ${data.like}
+                </p>
                 </div>
             </div>
-            `
-        // }
-    });
-};
+            `;
+    // }
+  });
+}
 
 readyPage();
 
-
-document.getElementById('profileBtn').addEventListener('click',()=>{
-    location.href='profile.html';
-})
+document.getElementById('profileBtn').addEventListener('click', () => {
+  location.href = 'profile.html';
+});
 
 // function  ------------------------------------------------------------------------------------------------------------
 
@@ -136,8 +85,6 @@ async function signup() {
     ).then((d) => {
       return d.json();
     });
-
-    console.log(fetchedData);
   } catch (e) {
     console.error(e);
   }
