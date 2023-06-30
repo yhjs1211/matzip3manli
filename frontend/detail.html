@@ -67,7 +67,6 @@
     </nav>
     <!-- 내용 붙일 자리 -->
     <main>
-      <button type="button" onclick="call()">콜 버튼</button>
       <div class="post-card">
         <div class="row align-items-md-stretch">
           <div class="col-md-6">
@@ -77,7 +76,7 @@
               <p id="content">content</p>
               <p id="menu">menu</p>
               <p id="zone">zone</p>
-              <button class="btn btn-dark" type="button" onclick="updatePost()">
+              <button class="btn btn-dark" type="button" onclick="postUpdate()">
                 수정하기
               </button>
 
@@ -98,43 +97,20 @@
           </div>
         </div>
       </div>
-      <form class="comment">
         <div class="form-floating">
           <input
             type="text"
             class="form-control"
-            id="comment-input"
             placeholder="댓글을 입력해주세요"
             style="width: 800px"
+            id="comment-input"
           />
           <label for="floatingInput">댓글 입력</label>
         </div>
-        <button class="btn btn-outline-success" type="submit">등록하기</button>
-      </form>
+        <button class="btn btn-outline-success" type="button" onclick="commentInput()">등록하기</button>
+      <!-- 댓글 붙이는 곳 -->
       <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h6 class="border-bottom pb-2 mb-0">댓글 달리는 자리</h6>
-        <div class="d-flex text-body-secondary pt-3" id="comment-list">
-          <svg
-            class="bd-placeholder-img flex-shrink-0 me-2 rounded"
-            width="32"
-            height="32"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="Placeholder: 32x32"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#007bff"></rect>
-            <text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text>
-          </svg>
-          <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-            <div class="d-flex justify-content-between">
-              <strong class="sext-gray-dark">Nickname</strong>
-            </div>
-            <span class="d-block">댓글 내용</span>
-          </div>
-        </div>
+        <h4 class="pb-2 mb-0" id="comment-list">Comment</h4>
       </div>
     </main>
     <!-- 회원가입 확인 Modal-->

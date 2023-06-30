@@ -105,7 +105,7 @@ const defaultValidate = {
       .notEmpty()
       .withMessage('수정할 내용을 입력해주세요.')
       .isLength({ min: 10 })
-      .withMessage('10자 이상을 입력하셔야 합니다.'),
+      .withMessage('수정할 내용은 10자 이상을 입력하셔야 합니다.'),
     validate,
   ],
   CommentUser: [
