@@ -1,11 +1,23 @@
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded",async ()=>{
     const auth = window.localStorage.getItem('Authorization');
     if(auth){
         showButton(true);
+        const option = {
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json",
+                Authorization:auth
+            }
+        };
+
+        const user = await fetch('http://localhost:3030/users/getUser',option).then(d=>{return d.json()});
+        console.log(user);
     }else{
-        showButton(false);   
+        location.href="index.html";
     }
 });
+
+
 
 // 버튼 노출 선택
 function showButton(boolean){

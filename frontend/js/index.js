@@ -7,10 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-
 async function moveDetail(tag) {
   const id = tag.getAttribute('alt');
   location.href = `detail.html?id=${id}`;
+}
+
+async function moveProfile() {
+  location.href = "profile.html";
 }
 
 async function readyPage(descType = undefined) {
@@ -19,7 +22,7 @@ async function readyPage(descType = undefined) {
     headers: {
       'Content-Type': 'application/json',
     },
-    // body:JSON.stringify({"descType":descType})
+    body:JSON.stringify({"descType":descType})
   };
 
 
@@ -48,6 +51,7 @@ async function readyPage(descType = undefined) {
             `;
     // }
   });
+  
 }
 //포스트 생성
 async function newPosts() {

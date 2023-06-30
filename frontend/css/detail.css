@@ -10,6 +10,31 @@
   font-size: 18px;
 }
 
+header {
+  background-image: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Rk9PRHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.navbar-brand {
+  font-size: 60px;
+}
+.navbar-brand .highlight {
+  font-family: 'Gamja Flower', cursive;
+  font-family: 'Jua', sans-serif;
+
+  color: orange;
+  font-style: italic;
+}
+.navbar-brand .subtext {
+  font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Dokdo', cursive;
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 48px;
+  color: #e7e7e7;
+}
+
 body {
   /* x축 영역을 벗어난 부분을 잘라서 보이지 않게 함. */
   overflow-x: hidden;

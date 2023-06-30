@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Dokdo&family=Nanum+Pen+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Jua&display=swap');
+
+* {
+  font-family: 'Do Hyeon', sans-serif;
+}
+header {
+  background-image: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Rk9PRHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.searchBox {
+  margin-top: 50px;
+}
+
+.btn.btn-primary {
+  margin-right: 10px;
+}
+.navbar-brand {
+  font-size: 60px;
+}
+.navbar-brand .highlight {
+  font-family: 'Gamja Flower', cursive;
+  font-family: 'Jua', sans-serif;
+
+  color: orange;
+  font-style: italic;
+}
+.navbar-brand .subtext {
+  font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Dokdo', cursive;
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 48px;
+  color: #e7e7e7;
+}
+
+::placeholder {
+  font-size: 17px;
+}
+.main-card > .card-container{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 10px;
+}
+
+aside {
+  margin: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+main {
+  margin: 10px;
+}
+
+main p {
+  color: gray;
+}
+
+.btn-no-border {
+  border: none;
+  text-decoration: none;
+}
+
+.btn-no-border:hover {
+  text-decoration: underline;
+  font-weight: 500;
+  color: red;
+}
+
+.btn-add-restaurant:hover {
+  background-color: red;
+  color: white;
+}
+
+#verifyEmailBtn{
+  float: right;
+}
+
+
+#userEmail, #userName, #userId, #userIntroduce, #userPhone {
+  
+}

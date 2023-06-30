@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', async () => {
+  const auth = window.localStorage.getItem('Authorization');
+  if (auth) {
+    showButton(true);
+  } else {
+    showButton(false);
+  }
+
   const id = new URL(location.href).searchParams.get('id');
   const option = {
     method: 'GET',
@@ -10,6 +17,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     (d) => d.json()
   );
 });
+
+
 
 // 상세 게시글 조회
 const callPostInfo = async () => {
@@ -46,6 +55,8 @@ async function postUpdate() {
   const id = new URL(location.href).searchParams.get('id');
   const updateContent = prompt('수정할 내용을 입력하세요');
   obj.content = updateContent;
+
+  console.log(obj);
   const option = {
     method: 'PUT',
     headers: {
@@ -188,5 +199,30 @@ async function commentDelete(id) {
       option
     ).then((d) => d.json());
     window.location.reload();
+  }
+}
+
+// 버튼 노출 선택
+function showButton(boolean) {
+  if (boolean == true) {
+    // 로그인 로그아웃 버튼 전환
+    document.getElementById('loginBtn').setAttribute('style', 'display:none;');
+    if (document.getElementById('logoutBtn').hasAttribute('style'))
+      document.getElementById('logoutBtn').removeAttribute('style');
+    // 회원가입 프로필 버튼 전환
+    document.getElementById('signupBtn').setAttribute('style', 'display:none;');
+    if (document.getElementById('profileBtn').hasAttribute('style'))
+      document.getElementById('profileBtn').removeAttribute('style');
+  } else {
+    // 로그인 로그아웃 버튼 전환
+    if (document.getElementById('loginBtn').hasAttribute('style'))
+      document.getElementById('loginBtn').removeAttribute('style');
+    document.getElementById('logoutBtn').setAttribute('style', 'display:none;');
+    // 회원가입 프로필 버튼 전환
+    if (document.getElementById('signupBtn').hasAttribute('style'))
+      document.getElementById('signupBtn').removeAttribute('style');
+    document
+      .getElementById('profileBtn')
+      .setAttribute('style', 'display:none;');
   }
 }

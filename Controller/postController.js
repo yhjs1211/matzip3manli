@@ -37,7 +37,6 @@ module.exports = {
     try {
       if (descType === 'like' || descType === undefined) {
         const posts = await Post.findAll({
-          attributes: ['id', 'restaurantName', 'like', 'menu', 'createdAt'],
           order: [['like', 'DESC']], // 좋아요순 정렬
         });
         return res.status(200).json({ data: posts });
