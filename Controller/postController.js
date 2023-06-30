@@ -2,8 +2,6 @@ const jwt = require('jsonwebtoken');
 const Post = require('../database/Models/post.js');
 const User = require('../database/Models/user.js');
 const config = require('../config.js');
-const { secretKey, expireIn } = config.jwt;
-const bcrypt = require('bcrypt');
 
 module.exports = {
   create: async (req, res, next) => {
@@ -35,11 +33,22 @@ module.exports = {
     }
   },
   getPosts: async (req, res, next) => {
+    const descType = req.body.descType;
     try {
-      const posts = await Post.findAll({
-        order: [['like', 'DESC']], // 좋아요순 정렬
-      });
-      return res.status(200).json({ data: posts });
+      if (descType === 'like' || descType === undefined) {
+        const posts = await Post.findAll({
+          attributes: ['id', 'restaurantName', 'like', 'menu', 'createdAt'],
+          order: [['like', 'DESC']], // 좋아요순 정렬
+        });
+        return res.status(200).json({ data: posts });
+      }
+      if (descType === 'createdAt') {
+        const posts = await Post.findAll({
+          attributes: ['id', 'restaurantName', 'like', 'menu', 'createdAt'],
+          order: [['createdAt', 'DESC']], // 생성순 정렬
+        });
+        return res.status(200).json({ data: posts });
+      }
     } catch (err) {
       console.log(err);
       res.status(400).json({ errorMessage: '게시글 조회에 실패하였습니다.' });
@@ -74,7 +83,7 @@ module.exports = {
   update: async (req, res, next) => {
     const { id } = req.params;
     const foundUser = res.locals.foundUser;
-    const { restaurantName, zone, menu, content, foodImgURL } = req.body;
+    const { content } = req.body;
     const foundPost = await Post.findOne({ where: { id } });
 
     try {
@@ -82,7 +91,7 @@ module.exports = {
         return res.status(401).json({ Message: '수정할 권한이 없습니다.' });
       }
       await Post.update(
-        { restaurantName, zone, menu, content, foodImgURL },
+        { content },
         {
           where: { id },
         }

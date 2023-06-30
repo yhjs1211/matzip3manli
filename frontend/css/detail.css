@@ -1,0 +1,44 @@
+/* detail.css 파일 */
+/* 내용 바로 앞,뒤에서 생성되는 설정 */
+*,
+::after,
+::before {
+  /* 박스 너비 기준 정하기 */
+  /* border-box : 설정한 width와 height값을 margin과 padding 값까지 */
+  /* 계산해서 설정 */
+  box-sizing: border-box;
+  font-size: 18px;
+}
+
+body {
+  /* x축 영역을 벗어난 부분을 잘라서 보이지 않게 함. */
+  overflow-x: hidden;
+  display: block;
+  align-items: center;
+  display: grid;
+}
+
+main {
+  max-width: 1200px;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-top: 12px;
+  margin-left: 70px;
+  margin-right: 70px;
+  line-height: 24px;
+}
+
+.comment {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.comment button {
+  margin: 0 0 0 30px;
+  height: 65px;
+}
+
+.commnet-list {
+  width: 1000px;
+}

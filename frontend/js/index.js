@@ -7,66 +7,48 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// 카드 불러오기
+
+async function moveDetail(tag) {
+  const id = tag.getAttribute('alt');
+  location.href = `detail.html?id=${id}`;
+}
+
 async function readyPage(descType = undefined) {
   const option = {
-    method: 'GET', // POST 로 변경 예정
+    method: 'POST', // POST 로 변경 예정
     headers: {
       'Content-Type': 'application/json',
     },
     // body:JSON.stringify({"descType":descType})
   };
 
-  const posts = (await fetch('http://localhost:3030/posts', option).then((d) => d.json())).data;
+
+  const posts = (
+    await fetch('http://localhost:3030/posts/list', option).then((d) =>
+      d.json()
+    )
+  ).data;
 
   const container = document.getElementsByClassName('card-container')[0];
 
   posts.forEach((data) => {
-    // if(data.foodImgURL){
-    //     container.innerHTML+=
-    //     `
-    //     <div class="card-container">
-    //     <div class="card" style="width: 12rem">
-    //         <a href="./detail.html">
-    //         <img src="${data.foodImgURL}" class="card-img-top" alt="..." />
-    //         </a>
-    //         <div class="card-body">
-    //         <h4 class="card-title">${data.restaurantName}</h4>
-    //         <p class="card-text">${data.content}</p>
-    //         </div>
-    //         <div class="card-footer">
-    //         <p>
-    //             작성자 : ${data.nickname}, 좋아요 : ${data.like}
-    //         </p>
-    //         </div>
-    //     </div>
-    //     </div>
-    //     `
-    // }else{
     container.innerHTML += `
-    <div class="card-container">
-    <div class="card" style="width: 12rem;">
-      <a href="./detail.html">
-        <img src="${data.foodImgURL}" class="card-img-top" width="120px" height="200px" onerror="this.src='./img/No_image.jpeg'">
-      </a>
-      <div class="card-body">
-        <h4 class="card-title">${data.restaurantName}</h4>
-        <p class="card-text">${data.content}</p>
-      </div>
-      <div class="card-footer">
-        <p> 
-          지역 : ${data.zone}  <br> 
-          작성자 : ${data.nickname} <br> 
-          좋아요 : ${data.like}
-        </p>
-      </div>
-    </div>
-  </div>
+            <div class="card" style="width: 12rem">
+                <img src="./img/No_image.jpeg" onclick="moveDetail(this)" class="card-img-top" alt="${data.id}" />
+                <div class="card-body">
+                <h4 class="card-title">${data.restaurantName}</h4>
+                <p class="card-text">${data.content}</p>
+                </div>
+                <div class="card-footer">
+                <p>
+                    작성자 : ${data.nickname}, 좋아요 : ${data.like}
+                </p>
+                </div>
+            </div>
             `;
     // }
   });
 }
-
 //포스트 생성
 async function newPosts() {
   const obj = {};
@@ -101,6 +83,7 @@ function filterCards() {
   const searchInput = document.getElementById('searchInput');
   const searchValue = searchInput.value.trim().toLowerCase();
   const cards = document.querySelectorAll('#cardContainer .card-container');
+
 
   cards.forEach((card) => {
     const title = card.querySelector('.card-title').textContent.toLowerCase();
@@ -175,11 +158,13 @@ async function signup() {
   };
 
   try {
-    const fetchedData = await fetch('http://localhost:3030/users/signup', option).then((d) => {
+
+    const fetchedData = await fetch(
+      'http://localhost:3030/users/signup',
+      option
+    ).then((d) => {
       return d.json();
     });
-
-    console.log(fetchedData);
   } catch (e) {
     console.error(e);
   }
@@ -198,11 +183,14 @@ async function login() {
     body: JSON.stringify(obj),
   };
 
+
   try {
-    const fetchedData = await fetch('http://localhost:3030/users/login', option).then((d) => {
+    const fetchedData = await fetch(
+      'http://localhost:3030/users/login',
+      option
+    ).then((d) => {
       return d.json();
     });
-
     window.localStorage.setItem('Authorization', 'Bearer ' + fetchedData.token);
     window.location.reload();
   } catch (e) {
@@ -274,6 +262,8 @@ function showButton(boolean) {
     // 회원가입 프로필 버튼 전환
     if (document.getElementById('signupBtn').hasAttribute('style'))
       document.getElementById('signupBtn').removeAttribute('style');
-    document.getElementById('profileBtn').setAttribute('style', 'display:none;');
+    document
+      .getElementById('profileBtn')
+      .setAttribute('style', 'display:none;');
   }
 }
