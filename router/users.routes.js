@@ -11,6 +11,8 @@ router.post('/login', validator.loginUser, userController.login);
 
 router.get('/logout', userController.logout);
 
+router.get('/getUser',isAuth, userController.getUser);
+
 router.post('/mail',validator.verifyEmail, userController.mail);
 
 router.post('/:userId', validator.updateUser, userController.update);
