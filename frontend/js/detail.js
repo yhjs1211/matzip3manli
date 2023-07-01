@@ -1,5 +1,7 @@
+// 전역 변수
+const auth = window.localStorage.getItem('Authorization');
+//
 document.addEventListener('DOMContentLoaded', async () => {
-  const auth = window.localStorage.getItem('Authorization');
   if (auth) {
     showButton(true);
   } else {
@@ -28,13 +30,14 @@ const callPostInfo = async () => {
   const id = urlParams.get('id');
   const postList = await fetch(`http://localhost:3030/posts/${id}`, options).then((res) => res.json());
 
-  const { restaurantName, nickname, content, menu, zone, foodImgURL } = postList.data;
+  const { restaurantName, nickname, content, menu, zone, foodImgURL, like } = postList.data;
 
   document.getElementById('restaurantName').textContent = restaurantName;
   document.getElementById('nickname').textContent = nickname;
   document.getElementById('content').textContent = content;
   document.getElementById('menu').textContent = menu;
   document.getElementById('zone').textContent = zone;
+  document.getElementById('like').textContent = like;
 
   const foodImg = document.getElementById('foodImg');
   foodImg.src = foodImgURL;
@@ -53,7 +56,7 @@ async function postUpdate() {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: localStorage.getItem('Authorization'),
+      Authorization: auth,
     },
     body: JSON.stringify(obj),
   };
@@ -75,7 +78,7 @@ async function postDelete() {
       method: 'DELETE',
       headers: {
         accept: 'application/json',
-        Authorization: localStorage.getItem('Authorization'),
+        Authorization: auth,
       },
     };
     const deletePost = await fetch(`http://localhost:3030/posts/${id}`, option).then((d) => d.json());
@@ -94,7 +97,7 @@ async function commentInput() {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: localStorage.getItem('Authorization'),
+      Authorization: auth,
     },
     body: JSON.stringify(obj),
   };
@@ -157,7 +160,7 @@ async function commentUpdate(id) {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: localStorage.getItem('Authorization'),
+      Authorization: auth,
     },
     body: JSON.stringify(obj),
   };
@@ -179,12 +182,31 @@ async function commentDelete(id) {
       method: 'DELETE',
       headers: {
         accept: 'application/json',
-        Authorization: localStorage.getItem('Authorization'),
+        Authorization: auth,
       },
     };
     const deleteComment = await fetch(`http://localhost:3030/comments/${id}`, option).then((d) => d.json());
     window.location.reload();
   }
+}
+
+async function moveProfile() {
+  location.href = 'profile.html';
+}
+
+async function postLike(){
+  const option = {
+    method:"PUT",
+    headers:{
+      "Content-Type":"application/json",
+      Authorization:auth
+    },
+  };
+
+  const postId = new URL(location.href).searchParams.get('id');
+
+  const message = await fetch(`http://localhost:3030/posts/like?id=${postId}`,option).then(d=>{return d.json()});
+  window.location.reload();
 }
 
 // 버튼 노출 선택

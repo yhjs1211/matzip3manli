@@ -79,7 +79,17 @@ main p {
   float: right;
 }
 
-
-#userEmail, #userName, #userId, #userIntroduce, #userPhone {
+#user-data {
+  margin-top: 50px;
   
+}
+
+.user-container > button{
+  float: right;
+}
+
+#updateBtn {
+  font-size: 20px;
+  border: none;
+  background-color: rgba(0,0,0,0);
 }

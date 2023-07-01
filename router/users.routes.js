@@ -15,10 +15,6 @@ router.get('/getUser',isAuth, userController.getUser);
 
 router.post('/mail',validator.verifyEmail, userController.mail);
 
-router.post('/:userId', validator.updateUser, userController.update);
-
-
+router.put('/:userId',isAuth, validator.updateUser,userController.update);
 
 module.exports = router;
-
- 

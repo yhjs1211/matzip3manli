@@ -70,8 +70,16 @@ main {
 .likeIcon {
   width: 50px;
   height: auto;
-  float: right;
+  float: left;
 }
+
+.updateBtn , .deleteBtn{
+  float: right;
+  border: none;
+  background-color: rgb(0,0,0,0);
+  margin-bottom: 20px;
+}
+
 
 .likeIcon:hover {
   cursor: pointer;

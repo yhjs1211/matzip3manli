@@ -33,6 +33,10 @@ const Post = mysql.define('post', {
     type: Datatypes.INTEGER,
     defaultValue: 0,
   },
+  likedwho: {
+    type: Datatypes.TEXT({length:"long"}),
+    allowNull:true
+  },
   foodImgURL: {
     type: Datatypes.STRING,
     allowNull: true,

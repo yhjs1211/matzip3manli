@@ -116,4 +116,30 @@ module.exports = {
       res.status(400).json({ errorMessage: '게시글 삭제에 실패하였습니다.' });
     }
   },
+  like: async (req, res) => {
+    const postId = req.query.id;
+    const foundUser = res.locals.foundUser;
+
+    try {
+      const targetPost = await Post.findByPk(postId);
+      const likeArr = JSON.parse(targetPost.dataValues.likedwho) ?? [];
+      const idx = likeArr.indexOf(foundUser.id);
+      let like = targetPost.dataValues.like;
+
+      let updated;
+      if(idx==-1){ // foundUser doesn't exist
+        like++;
+        likeArr.push(foundUser.id);
+        updated = await targetPost.update({like,likedwho:JSON.stringify(likeArr)}).then(d=>{return d});
+      }else{ // foundUser exist
+        like--;
+        likeArr.splice(idx,1);
+        updated = await targetPost.update({like,likedwho:JSON.stringify(likeArr)}).then(d=>{return d});
+      }
+      
+      res.status(200).json(updated.toJSON());
+    } catch (e) {
+      console.error(e);
+    }
+  }
 };

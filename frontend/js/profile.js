@@ -2,21 +2,33 @@ document.addEventListener("DOMContentLoaded",async ()=>{
     const auth = window.localStorage.getItem('Authorization');
     if(auth){
         showButton(true);
-        const option = {
-            method:"GET",
-            headers:{
-                "Content-Type":"application/json",
-                Authorization:auth
-            }
-        };
-
-        const user = await fetch('http://localhost:3030/users/getUser',option).then(d=>{return d.json()});
-        console.log(user);
     }else{
         location.href="index.html";
     }
 });
+let userId;
 
+readyPage();
+
+
+
+async function updateUser(){
+    const obj = {};
+    obj.imageURL = $('#updateImgURL').val();
+    obj.phone =$('#updatePhone').val();
+    obj.introduce =$('#updateIntroduce').val();
+
+    const option = {
+        method:"PUT",
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:window.localStorage.getItem('Authorization')
+        },
+        body:JSON.stringify(obj)
+    };
+    const updated = await fetch(`http://localhost:3030/users/${userId}`,option).then(d=>{return d.json()});
+    window.location.reload();
+}
 
 
 // 버튼 노출 선택
@@ -38,40 +50,23 @@ function showButton(boolean){
     }
 };
 
-async function readyPage(descType=undefined){
-    const option={
-        method:"GET", // POST 로 변경 예정
+async function readyPage(){
+    const option = {
+        method:"GET",
         headers:{
-            "Content-Type":"application/json"
-        },
-        // body:JSON.stringify({"descType":descType})
+            "Content-Type":"application/json",
+            Authorization:window.localStorage.getItem('Authorization')
+        }
     };
 
-    const posts = (await fetch('http://localhost:3030/posts',option).then(d=>d.json())).data;
-
-    const container = document.getElementsByClassName('card-container')[0];
+    const user = await fetch('http://localhost:3030/users/getUser',option).then(d=>{return d.json()});
     
-    posts.forEach(data=>{
-            container.innerHTML+=
-            `
-            <div class="card-container">
-            <div class="card" style="width: 12rem">
-                <a href="./detail.html">
-                <img src="../frontend/css/food.jpg" class="card-img-top" alt="..." />
-                </a>
-                <div class="card-body">
-                <h4 class="card-title">${data.restaurantName}</h4>
-                <p class="card-text">${data.content}</p>
-                </div>
-                <div class="card-footer">
-                <p>
-                    작성자 : ${data.nickname}, 좋아요 : ${data.like}
-                </p>
-                </div>
-            </div>
-            </div>
-            `
-    });
+    document.querySelector('#userEmail').innerHTML = user.email;
+    document.querySelector('#userId').innerHTML = user.nickname;
+    document.querySelector('#userName').innerHTML = user.name;
+    document.querySelector('#userPhone').innerHTML = user.phone;
+    document.querySelector('#userImgURL').innerHTML = user.imageURL;
+    document.querySelector('#userIntroduce').innerHTML = user.introduce;
+    userId = user.id;
 };
 
-readyPage();

@@ -10,7 +10,7 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
-    <link href="./css/index.css" rel="stylesheet" />
+    <link href="./css/profile.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
@@ -281,30 +281,118 @@
         </div>
       </nav>
     </header>
-    <div class="row user-container">
+    <div class="row">
       <div class="col-3"></div>
-      <div class="col-6">
-        <h1 style="text-align: center; margin-top: 30px;">User Info</h1>
-        <div class="user-info">
-          <div id="userEmail">
-            E-mail 👉
-          </div>
-          <div id="userId">
-            ID 👉
-          </div>
-          <div id="userName">
-            Name 👉
-          </div>
-          <div id="userPhone">
-            Phone 👉
-          </div>
-          <div id="userImgURL">
-            Image URL 👉
-          </div>
-          <div id="userIntroduce">
-            Introduce 👉
+      <div class="col-6 user-container">
+        <h1 style="text-align: center; margin-top: 30px">User Info</h1>
+          <button
+            type="button"
+            id="updateBtn"
+            data-bs-toggle="modal"
+            data-bs-target="#updateUserModal"
+          >
+            수정
+          </button>
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="updateUserModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                  정보 수정
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form id="updateForm">
+                  <!-- 정보 수정 입력 내용 모달 -->
+                  <div class="mb-3">
+                    <label for="#updatePhone" class="form-label"
+                      >Mobile</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="updatePhone"
+                      placeholder="Phone"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="#updateImgURL" class="form-label"
+                      >ImageURL</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="updateImgURL"
+                      placeholder="ImageURL"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="#updateIntroduce" class="form-label"
+                      >Introduce</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="updateIntroduce"
+                      rows="3"
+                      placeholder="Introduce myself"
+                    ></textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="updateUser()">
+                  수정하기
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  닫기
+                </button>
+              </div>
+            </div>
           </div>
         </div>
+        <table id="user-data" class="table table-striped">
+          <tr>
+            <td>E-mail 👉</td>
+            <td id="userEmail"></td>
+          </tr>
+          <tr>
+            <td>ID 👉</td>
+            <td id="userId"></td>
+          </tr>
+          <tr>
+            <td>Name 👉</td>
+            <td id="userName"></td>
+          </tr>
+          <tr>
+            <td>Phone 👉</td>
+            <td id="userPhone"></td>
+          </tr>
+          <tr>
+            <td>Image URL 👉</td>
+            <td id="userImgURL"></td>
+          </tr>
+          <tr>
+            <td>Introduce 👉</td>
+            <td id="userIntroduce"></td>
+          </tr>
+        </table>
       </div>
       <div class="col-3"></div>
     </div>

@@ -71,20 +71,36 @@ module.exports = {
 
   update: async (req, res) => {
     const id = req.params.userId;
-    const { nickname, imageURL, introduce, phone } = req.body;
+    const { imageURL, introduce, phone } = req.body;
 
-    if (!nickname && !imageURL && !introduce && !phone) {
-      console.log(req.url);
-      res.status(400).json({ message: '업데이트 할 정보를 입력해주세요.' });
-    } else {
-      try {
-        const foundUser = await User.findByPk(id);
-        if (foundUser) {
-          // await User.update(,{where:id})
-        } else {
-          res.status(404).json({ message: '회원 정보를 찾을 수 없습니다.' });
+    try {
+      const foundUser = await User.findByPk(id);
+      
+      if (foundUser) {
+        let updated;
+        if(imageURL && introduce && phone){
+          updated = await foundUser.update({imageURL,introduce,phone}).then(d=>{return d});
+        }else if(imageURL && introduce && !phone){
+          updated = await foundUser.update({imageURL,introduce}).then(d=>{return d});
+        }else if(imageURL && phone && !introduce){
+          updated = await foundUser.update({imageURL,phone}).then(d=>{return d});
+        }else if(introduce && phone && !imageURL){
+          updated = await foundUser.update({introduce,phone}).then(d=>{return d});
+        }else if(imageURL && !introduce && !phone){
+          updated = await foundUser.update({imageURL}).then(d=>{return d});
+        }else if(!imageURL && introduce && !phone){
+          updated = await foundUser.update({introduce}).then(d=>{return d});
+        }else if(!imageURL && !introduce && phone){
+          updated = await foundUser.update({phone}).then(d=>{return d});
+        }else if(!imageURL && !introduce && !phone){
+          updated = {"message":"아무것도 업데이트 되지 않았습니다."};
         }
-      } catch (e) {}
+        res.status(200).json(JSON.parse(JSON.stringify(updated)));
+      } else {
+        res.status(404).json({ message: '회원 정보를 찾을 수 없습니다.' });
+      }
+    } catch (e) {
+      console.error(e);
     }
   },
   mail: (req, res) => {
@@ -97,4 +113,9 @@ module.exports = {
       message: '인증메일이 전송되었습니다.',
     });
   },
+  getUser : (req, res) => {
+    const user = res.locals.foundUser;
+
+    res.status(200).json(JSON.parse(JSON.stringify(user)));
+  }
 };

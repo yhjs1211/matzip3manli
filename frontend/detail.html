@@ -33,7 +33,7 @@
               >
                 회원가입
               </button>
-              <button type="button" id="profileBtn" class="btn btn-primary" onclick="">프로필</button>
+              <button type="button" id="profileBtn" class="btn btn-primary" onclick="moveProfile()">프로필</button>
 
               <!-- 회원가입 모달 -->
               <div
@@ -174,9 +174,12 @@
               <p id="content">content</p>
               <p id="menu">menu</p>
               <p id="zone">zone</p>
-              <button class="btn btn-dark" type="button" onclick="postUpdate()">수정하기</button>
-              <button class="btn btn-dark" type="button" onclick="postDelete()">삭제하기</button>
               <img src="./img/like.png" alt="" class="likeIcon" onclick="postLike()">
+              <h1 id="like"></h1>
+              <div class="btn-container">
+                <button class="updateBtn" type="button" onclick="postUpdate()">수정하기</button>
+                <button class="deleteBtn" type="button" onclick="postDelete()">삭제하기</button>
+              </div>
             </div>
           </div>
         </div>

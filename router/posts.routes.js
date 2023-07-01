@@ -13,6 +13,8 @@ router.get('/zone', postController.getPostsByZone);
 // 게시글 전체 조회(좋아요순, 최신생성순)
 router.post('/list', postController.getPosts);
 
+router.put('/like',isAuth,postController.like)
+
 // 게시글 상세 조회
 router.get('/:id', postController.getPost);
 

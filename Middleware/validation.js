@@ -14,7 +14,7 @@ const validate = function (req, res, next) {
   else {
     res.status(400).json({
       //에러 메세지는 errors배열을 순회하며 오류 메시지를 생성.
-      errorMessage: errors.array().map((v, idx) => `${idx + 1} : ${v.msg}`),
+      errorMessage: errors.array().map((v, idx) => `${v.msg}`),
     });
   }
 };
@@ -65,16 +65,12 @@ const defaultValidate = {
     validate,
   ],
   updateUser: [
-    body('nickname')
-      .trim()
-      .notEmpty()
-      .withMessage('닉네임을 입력해주세요.')
-      .optional({ nullable: true, checkFalsy: true }),
     body('imageURL', 'URL 형식이 아닙니다. 확인해주세요.')
       .isURL()
       .optional({ nullable: true, checkFalsy: true }),
     body('introduce').optional({ nullable: true, checkFalsy: true }),
     body('phone')
+      .not()
       .contains('-')
       .withMessage("'-'를 빼고 입력해주세요.")
       .optional({ nullable: true, checkFalsy: true }),
