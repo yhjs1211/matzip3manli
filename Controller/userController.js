@@ -68,11 +68,7 @@ module.exports = {
     res.render(__dirname + '/index.html');
     res.end();
   },
-  getUser: async (req, res) => {
-    const user = res.locals.foundUser;
-    
-    res.status(200).json(JSON.parse(JSON.stringify(user)));
-  },
+
   update: async (req, res) => {
     const id = req.params.userId;
     const { nickname, imageURL, introduce, phone } = req.body;
@@ -94,7 +90,7 @@ module.exports = {
   mail: (req, res) => {
     const email = req.body.email;
 
-    const verifyNum = mailsender.sendKakaoMail(email);
+    const verifyNum = mailsender.sendGmail(email);
 
     res.status(200).json({
       verifyNum: `${verifyNum}`,

@@ -159,52 +159,44 @@
 
     <!-- 내용 붙일 자리 -->
     <main>
-      <div class="post-card">
-        <div class="row align-items-md-stretch">
-          <div class="col-md-6">
-            <div class="h-100 p-4 bg-body-tertiary border rounded-3">
+      <!-- 게시글 -->
+      <div class="post-card" >
+        <div class="row align-items-md-stretch" >
+          <div class="col-md-6" >
+            <div class="h-100 p-4 bg-body-tertiary border rounded-3" >
+              <div class="col-md-6 text-center" >
+                <div>
+                  <img id="foodImg" src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20200905_271%2F1599296691857tdoVh_JPEG%2Fr6tC2j4W2TIb5Hy6pg0KNoHG.jpeg.jpg" alt="detailImg" />
+                </div>
+              </div>
               <h2 id="restaurantName">Restaurant Name</h2>
-              <p id="nickname">nickname</p>
+              <p id="nickname" >nickname</p>
               <p id="content">content</p>
               <p id="menu">menu</p>
               <p id="zone">zone</p>
-              <button class="btn btn-dark" type="button" onclick="postUpdate()">
-                수정하기
-              </button>
-
+              <button class="btn btn-dark" type="button" onclick="postUpdate()">수정하기</button>
               <button class="btn btn-dark" type="button" onclick="postDelete()">삭제하기</button>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-              <img
-                id="foodImg"
-                src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20200905_271%2F1599296691857tdoVh_JPEG%2Fr6tC2j4W2TIb5Hy6pg0KNoHG.jpeg.jpg"
-                alt="detailimg"
-                max
-                width="100%"
-                height="auto"
-              />
+              <img src="./img/like.png" alt="" class="likeIcon" onclick="postLike()">
             </div>
           </div>
         </div>
       </div>
+       <!-- 댓글 -->
         <div class="form-floating">
           <input
             type="text"
             class="form-control"
             placeholder="댓글을 입력해주세요"
-            style="width: 800px"
+            style="width: 600px"
             id="comment-input"
           />
           <label for="floatingInput">댓글 입력</label>
         </div>
-        <button class="btn btn-outline-success" type="button" onclick="commentInput()">등록하기</button>
-      <!-- 댓글 붙이는 곳 -->
+        <button class="btn btn-outline-success" style="margin-top: 10px;" type="button" onclick="commentInput()">등록하기</button>
       <div class="my-3 p-3 bg-body rounded shadow-sm">
         <h4 class="pb-2 mb-0" id="comment-list">Comment</h4>
       </div>
-    </main>
+    
     <!-- 회원가입 확인 Modal-->
     <div
       class="modal fade"

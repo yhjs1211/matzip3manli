@@ -1,5 +1,7 @@
-/* detail.css 파일 */
-/* 내용 바로 앞,뒤에서 생성되는 설정 */
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Dokdo&family=Nanum+Pen+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Jua&display=swap');
+
 *,
 ::after,
 ::before {
@@ -8,8 +10,11 @@
   /* 계산해서 설정 */
   box-sizing: border-box;
   font-size: 18px;
+  font-family: 'Gamja Flower', cursive;
+  font-family: 'Jua', sans-serif;
 }
 
+/* 상단 헤더부분 */
 header {
   background-image: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Rk9PRHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60');
   background-repeat: no-repeat;
@@ -17,16 +22,13 @@ header {
   background-position: center;
 }
 
-.navbar-brand {
-  font-size: 60px;
-}
 .navbar-brand .highlight {
-  font-family: 'Gamja Flower', cursive;
-  font-family: 'Jua', sans-serif;
-
+  font-size: 60px;
+  margin-right: 10px;
   color: orange;
   font-style: italic;
 }
+
 .navbar-brand .subtext {
   font-family: 'Do Hyeon', sans-serif;
   font-family: 'Dokdo', cursive;
@@ -35,6 +37,7 @@ header {
   color: #e7e7e7;
 }
 
+/* 바디, 메인부분 */
 body {
   /* x축 영역을 벗어난 부분을 잘라서 보이지 않게 함. */
   overflow-x: hidden;
@@ -44,26 +47,58 @@ body {
 }
 
 main {
-  max-width: 1200px;
-  padding-left: 12px;
-  padding-right: 12px;
-  margin-top: 12px;
-  margin-left: 70px;
-  margin-right: 70px;
+  max-width: 1250px;
+  padding: 0;
+  margin: 50px;
   line-height: 24px;
 }
 
-.comment {
-  display: flex;
-  align-items: center;
+#foodImg {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  margin: 0 auto;
+  min-width: 400px;
+  min-height: 200px;
+}
+
+#nickname {
+  color: green;
+  font-weight: bold;
+}
+
+.likeIcon {
+  width: 50px;
+  height: auto;
+  float: right;
+}
+
+.likeIcon:hover {
+  cursor: pointer;
+}
+
+/* 댓글부분 */
+.form-floating {
   margin-top: 10px;
 }
-
-.comment button {
-  margin: 0 0 0 30px;
-  height: 65px;
+.comment-container {
+  position: relative;
 }
 
-.commnet-list {
-  width: 1000px;
+.x-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  color: red;
+  font-weight: bold;
+}
+
+.update-button-container {
+  margin-top: 20px;
+}
+
+.update-button {
+  color: red;
+  font-size: 15px;
 }
