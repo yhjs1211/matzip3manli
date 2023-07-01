@@ -18,7 +18,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   );
 });
 
-
+async function moveDetail(tag) {
+  const id = new URL(location.href).searchParams.get('id');
+  location.href = `detail.html?id=${id}`;
+}
 
 // 상세 게시글 조회
 const callPostInfo = async () => {
@@ -149,8 +152,8 @@ const callComments = async () => {
                                               <strong class="text-dark">${data.nickname}</strong>
                                             </div>
                                             <span class="d-block">${data.comment}</span>
-                                            <a href="#" onclick="commentUpdate(${data.id}; return false;)">수정</a>
-                                            <a href="#" onclick="commentDelete(${data.id} return false;)">삭제</a>
+                                            <a href="#" onclick="commentUpdate(${data.id})">수정</a>
+                                            <a href="#" onclick="commentDelete(${data.id})">삭제</a>
                                           </div>
                                       </div>`;
   });

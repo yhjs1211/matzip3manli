@@ -37,7 +37,7 @@ async function readyPage(descType = undefined) {
   posts.forEach((data) => {
     container.innerHTML += `
             <div class="card" style="width: 12rem">
-                <img src="./img/No_image.jpeg" onclick="moveDetail(this)" class="card-img-top" alt="${data.id}" />
+                <img src="${data.foodImgURL}" onclick="moveDetail(this)" class="card-img-top" alt="${data.id}" />
                 <div class="card-body">
                 <h4 class="card-title">${data.restaurantName}</h4>
                 <p class="card-text">${data.content}</p>
