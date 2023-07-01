@@ -3,7 +3,7 @@ const User = require('../database/Models/user.js');
 const config = require('../config.js');
 
 async function isAuth(req, res, next) {
-  const auth = req.cookies.Authorization;
+  const auth = req.header('Authorization');
 
   if (!auth || !auth.startsWith('Bearer')) {
     return res.status(400).json({ message: '로그인 먼저 해주세요.' });
