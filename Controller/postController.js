@@ -23,7 +23,6 @@ module.exports = {
     const { zone } = req.query;
     try {
       const postsZone = await Post.findAll({
-        attributes: ['restaurantName', 'like', 'menu', 'createdAt'],
         where: { zone },
       });
       res.status(200).json(postsZone);
@@ -43,7 +42,6 @@ module.exports = {
       }
       if (descType === 'createdAt') {
         const posts = await Post.findAll({
-          attributes: ['id', 'restaurantName', 'like', 'menu', 'createdAt'],
           order: [['createdAt', 'DESC']], // 생성순 정렬
         });
         return res.status(200).json({ data: posts });
