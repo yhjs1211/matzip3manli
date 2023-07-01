@@ -13,18 +13,17 @@ async function moveDetail(tag) {
 }
 
 async function moveProfile() {
-  location.href = "profile.html";
+  location.href = 'profile.html';
 }
 
 async function readyPage(descType = undefined) {
   const option = {
-    method: 'POST', // POST 로 변경 예정
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body:JSON.stringify({"descType":descType})
+    body: JSON.stringify({ descType: descType }),
   };
-
 
   const posts = (
     await fetch('http://localhost:3030/posts/list', option).then((d) =>
@@ -33,7 +32,7 @@ async function readyPage(descType = undefined) {
   ).data;
 
   const container = document.getElementsByClassName('card-container')[0];
-
+  container.innerHTML = '';
   posts.forEach((data) => {
     container.innerHTML += `
             <div class="card" style="width: 12rem">
@@ -51,7 +50,6 @@ async function readyPage(descType = undefined) {
             `;
     // }
   });
-  
 }
 //포스트 생성
 async function newPosts() {
@@ -72,22 +70,59 @@ async function newPosts() {
     body: JSON.stringify(obj),
   };
   try {
-    const fetchedData = await fetch('http://localhost:3030/posts', option).then((d) => {
-      return d.json();
-    });
+    const fetchedData = await fetch('http://localhost:3030/posts', option).then(
+      (d) => {
+        return d.json();
+      }
+    );
     console.log(fetchedData);
     location.reload();
   } catch (e) {
     console.error(e);
   }
 }
+// 카드 지역별 클릭 함수
+async function zoneClick(zone) {
+  if (zone === '전체보기') {
+    readyPage();
+    return;
+  }
+  const option = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+    },
+  };
+  const postByZone = await fetch(
+    `http://localhost:3030/posts/zone?zone=${zone}`,
+    option
+  ).then((res) => res.json());
 
+  const container = document.getElementsByClassName('card-container')[0];
+  container.innerHTML = '';
+
+  postByZone.forEach((data) => {
+    container.innerHTML += `
+            <div class="card" style="width: 12rem">
+                <img src="./img/No_image.jpeg" onclick="moveDetail(this)" class="card-img-top" alt="${data.id}" />
+                <div class="card-body">
+                <h4 class="card-title">${data.restaurantName}</h4>
+                <p class="card-text">${data.content}</p>
+                </div>
+                <div class="card-footer">
+                <p>
+                    작성자 : ${data.nickname}, 좋아요 : ${data.like}
+                </p>
+                </div>
+            </div>
+            `;
+  });
+}
 // 카드 타이틀 검색 함수
 function filterCards() {
   const searchInput = document.getElementById('searchInput');
   const searchValue = searchInput.value.trim().toLowerCase();
   const cards = document.querySelectorAll('#cardContainer .card-container');
-
 
   cards.forEach((card) => {
     const title = card.querySelector('.card-title').textContent.toLowerCase();
@@ -122,7 +157,10 @@ async function signup() {
   };
 
   try {
-    const fetchedData = await fetch('http://localhost:3030/users/signup', option).then((d) => {
+    const fetchedData = await fetch(
+      'http://localhost:3030/users/signup',
+      option
+    ).then((d) => {
       return d.json();
     });
 
@@ -162,7 +200,6 @@ async function signup() {
   };
 
   try {
-
     const fetchedData = await fetch(
       'http://localhost:3030/users/signup',
       option
@@ -186,7 +223,6 @@ async function login() {
     },
     body: JSON.stringify(obj),
   };
-
 
   try {
     const fetchedData = await fetch(

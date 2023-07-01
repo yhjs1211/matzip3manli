@@ -4,6 +4,7 @@ const variable = {
     username: 'root',
     password: '20211211',
     database: 'matzip',
+
   },
   jwt: {
     secretKey: 'matzip-3manli',
