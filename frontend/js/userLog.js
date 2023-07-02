@@ -1,3 +1,41 @@
+const auth = window.localStorage.getItem('Authorization');
+
+document.addEventListener('DOMContentLoaded', async () => {
+  if (auth) {
+    showButton(true);
+  } else {
+    if(window.location.pathname.includes('profile')){
+      location.href="index.html";
+    }else{
+      showButton(false);
+    }
+    
+  }
+});
+
+// 버튼 노출 선택
+function showButton(boolean) {
+  if (boolean == true) {
+    // 로그인 로그아웃 버튼 전환
+    document.getElementById('loginBtn').setAttribute('style', 'display:none;');
+    if (document.getElementById('logoutBtn').hasAttribute('style'))
+      document.getElementById('logoutBtn').removeAttribute('style');
+    // 회원가입 프로필 버튼 전환
+    document.getElementById('signupBtn').setAttribute('style', 'display:none;');
+    if (document.getElementById('profileBtn').hasAttribute('style'))
+      document.getElementById('profileBtn').removeAttribute('style');
+  } else {
+    // 로그인 로그아웃 버튼 전환
+    if (document.getElementById('loginBtn').hasAttribute('style'))
+      document.getElementById('loginBtn').removeAttribute('style');
+    document.getElementById('logoutBtn').setAttribute('style', 'display:none;');
+    // 회원가입 프로필 버튼 전환
+    if (document.getElementById('signupBtn').hasAttribute('style'))
+      document.getElementById('signupBtn').removeAttribute('style');
+    document.getElementById('profileBtn').setAttribute('style', 'display:none;');
+  }
+}
+
 // 회원가입
 async function signup() {
     if (!document.getElementById('verifyEmailBtn').disabled) {

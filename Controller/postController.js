@@ -53,23 +53,33 @@ module.exports = {
   },
   getPost: async (req, res, next) => {
     const { id } = req.params;
+    let token = req.header('Authorization');
+    
+    
+    let userId;
+    if(token!='null'){
+      token = token.split(' ')[1];
+      userId = (jwt.verify(token,config.jwt.secretKey)).userId;
+    }else{
+      userId=undefined;
+    }
+
     try {
       const post = await Post.findOne({
-        attributes: [
-          'id',
-          'restaurantName',
-          'nickname',
-          'zone',
-          'menu',
-          'content',
-          'like',
-          'foodImgURL',
-          'createdAt',
-          'updatedAt',
-        ],
         where: { id },
       });
-      return res.status(200).json({ data: post });
+
+      if(post.userId==userId){
+        return res.status(200).json({
+          data: post,
+          same: true
+         });
+      }else{
+        return res.status(200).json({
+          data: post,
+          same: false
+         });
+      }
     } catch (err) {
       console.log(err);
       res

@@ -1,19 +1,37 @@
 const jwt = require('jsonwebtoken');
 const Comment = require('../database/Models/comment.js');
+const User = require('../database/Models/user.js');
 const config = require('../config.js');
-const { secretKey, expireIn } = config.jwt;
-const bcrypt = require('bcrypt');
 
 module.exports = {
     getCommentsByPostId: async (req, res, next) => {
         const postId = req.params.postId;
+        let token = req.header('Authorization');
+        
         try {
             const comments = await Comment.findAll({
                 where: {
                     postId,
                 },
             });
-            res.status(200).json(comments);
+
+            let userId;
+            let currentUser;
+            if(token!='null'){
+                token = token.split(' ')[1];
+                userId = (jwt.verify(token,config.jwt.secretKey)).userId;
+                currentUser = await User.findByPk(userId);
+                res.status(200).json({
+                    comments:comments,
+                    user:currentUser
+                });
+            }else{
+                res.status(200).json({
+                    comments:comments,
+                    user:null
+                });
+            }
+
         } catch (err) {
             console.error(err);
             res.status(500).json({ message: '서버 에러' });
@@ -65,7 +83,9 @@ module.exports = {
             if(foundComment.dataValues.userId==tryUser.id){
                 const updatedComment = await foundComment.update({"comment":comment}).then(d=>{return d});
 
-                res.status(200).json(updatedComment.toJSON());
+                res.status(200).json({
+                    message:"댓글이 수정되었습니다."
+                });
             }else{
                 res.status(400).json({
                     message:"수정 권한이 없습니다."
@@ -87,7 +107,9 @@ module.exports = {
             if(foundComment.dataValues.userId==tryUser.id){
                 await Comment.destroy({ where: { id: commentId } });
 
-                res.status(200).json({ message: '댓글 삭제 완료' });
+                res.status(200).json({
+                    message: '댓글이 삭제되었습니다.' 
+                });
             }else{
                 res.status(400).json({
                     message:"삭제 권한이 없습니다."
