@@ -36,16 +36,18 @@ async function readyPage(descType = undefined) {
   posts.forEach((data) => {
     container.innerHTML += `
             <div class="card" style="width: 12rem">
+              <div class="card-img-container">
                 <img src="${data.foodImgURL}" onclick="moveDetail(this)" class="card-img-top" alt="${data.id}" />
-                <div class="card-body">
-                <h4 class="card-title">${data.restaurantName}</h4>
-                <p class="card-text">${data.content}</p>
-                </div>
-                <div class="card-footer">
-                <p>
-                    작성자 : ${data.nickname}, 좋아요 : ${data.like}
-                </p>
-                </div>
+              </div>
+              <div class="card-body">
+              <h4 class="card-title">${data.restaurantName}</h4>
+              <p class="card-text">${data.content}</p>
+              </div>
+              <div class="card-footer">
+              <p>
+                  작성자 : ${data.nickname}, 좋아요 : ${data.like}
+              </p>
+              </div>
             </div>
             `;
     // }
@@ -104,8 +106,10 @@ async function zoneClick(zone) {
   postByZone.forEach((data) => {
     container.innerHTML += `
             <div class="card" style="width: 12rem">
-                <img src="./img/No_image.jpeg" onclick="moveDetail(this)" class="card-img-top" alt="${data.id}" />
-                <div class="card-body">
+              <div class=card-img-container">
+                <img src="${data.foodImgURL}" onclick="moveDetail(this)" class="card-img-top" alt="${data.id}" />
+              </div>
+              <div class="card-body">
                 <h4 class="card-title">${data.restaurantName}</h4>
                 <p class="card-text">${data.content}</p>
                 </div>
@@ -113,7 +117,7 @@ async function zoneClick(zone) {
                 <p>
                     작성자 : ${data.nickname}, 좋아요 : ${data.like}
                 </p>
-                </div>
+              </div>
             </div>
             `;
   });
@@ -134,41 +138,6 @@ function filterCards() {
   });
 }
 
-// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-async function signup() {
-  if (!document.getElementById('verifyEmailBtn').disabled) {
-    return alert('E-mail 인증 먼저 진행해주세요.');
-  }
-  const obj = {};
-  obj.nickname = $('#signupId').val();
-  obj.password = $('#signupPw').val();
-  obj.confirm = $('#signupConfirm').val();
-  obj.email = $('#signupEmail').val();
-  obj.phone = $('#signupPhone').val();
-  obj.imageURL = $('#signupImgURL').val();
-  obj.name = $('#signupName').val();
-  obj.introduce = $('#signupIntroduce').val();
-  const option = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(obj),
-  };
-
-  try {
-    const fetchedData = await fetch(
-      'http://localhost:3030/users/signup',
-      option
-    ).then((d) => {
-      return d.json();
-    });
-
-    console.log(fetchedData);
-  } catch (e) {
-    console.error(e);
-  }
-}
 readyPage();
 
 document.getElementById('profileBtn').addEventListener('click', () => {
@@ -206,6 +175,7 @@ async function signup() {
     ).then((d) => {
       return d.json();
     });
+    window.location.reload();
   } catch (e) {
     console.error(e);
   }
@@ -231,8 +201,12 @@ async function login() {
     ).then((d) => {
       return d.json();
     });
-    window.localStorage.setItem('Authorization', 'Bearer ' + fetchedData.token);
-    window.location.reload();
+    if(fetchedData.errorMessage){
+      alert(`${fetchedData.errorMessage}`);
+    }else{
+      window.localStorage.setItem('Authorization', 'Bearer ' + fetchedData.token);
+      window.location.reload();
+    }
   } catch (e) {
     console.error(e);
   }

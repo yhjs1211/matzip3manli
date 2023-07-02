@@ -186,6 +186,7 @@ async function commentDelete(id) {
       },
     };
     const deleteComment = await fetch(`http://localhost:3030/comments/${id}`, option).then((d) => d.json());
+    alert(deleteComment.message);
     window.location.reload();
   }
 }
@@ -230,4 +231,41 @@ function showButton(boolean) {
       document.getElementById('signupBtn').removeAttribute('style');
     document.getElementById('profileBtn').setAttribute('style', 'display:none;');
   }
+}
+
+// 로그인
+async function login() {
+  const obj = {};
+  obj.email = $('#loginEmail').val(); // Uniqe
+  obj.password = $('#loginPw').val();
+  const option = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(obj),
+  };
+
+  try {
+    const fetchedData = await fetch(
+      'http://localhost:3030/users/login',
+      option
+    ).then((d) => {
+      return d.json();
+    });
+    if(fetchedData.errorMessage){
+      alert(`${fetchedData.errorMessage}`);
+    }else{
+      window.localStorage.setItem('Authorization', 'Bearer ' + fetchedData.token);
+      window.location.reload();
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+// 로그아웃
+async function logout() {
+  window.localStorage.removeItem('Authorization');
+  window.location.reload();
 }

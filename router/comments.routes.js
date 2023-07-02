@@ -14,12 +14,14 @@ router.post(
   validation.CommentUser,
   commentController.create
 );
+
 router.put(
   '/:commentId',
   isAuth,
   validation.CommentUser,
   commentController.update
 );
+
 router.delete('/:commentId', isAuth, commentController.delete);
 
 module.exports = router;

@@ -58,11 +58,20 @@ module.exports = {
     update: async (req, res, next) => {
         const { comment } = req.body;
         const { commentId } = req.params;
+        const tryUser = res.locals.foundUser;
+
         try {
             const foundComment = await Comment.findByPk(commentId);
-            const updatedComment = await foundComment.update({"comment":comment}).then(d=>{return d});
+            if(foundComment.dataValues.userId==tryUser.id){
+                const updatedComment = await foundComment.update({"comment":comment}).then(d=>{return d});
 
-            res.status(200).json(updatedComment.toJSON());
+                res.status(200).json(updatedComment.toJSON());
+            }else{
+                res.status(400).json({
+                    message:"수정 권한이 없습니다."
+                })
+            }
+            
         } catch (err) {
             console.error(err);
             res.status(500).json({ message: '서버 에러' });
@@ -71,10 +80,19 @@ module.exports = {
 
     delete: async (req, res, next) => {
         const { commentId } = req.params;
-        try {
-            await Comment.destroy({ where: { id: commentId } });
+        const tryUser = res.locals.foundUser;
 
-            res.status(200).json({ message: '댓글 삭제 완료' });
+        try {
+            const foundComment = await Comment.findByPk(commentId);
+            if(foundComment.dataValues.userId==tryUser.id){
+                await Comment.destroy({ where: { id: commentId } });
+
+                res.status(200).json({ message: '댓글 삭제 완료' });
+            }else{
+                res.status(400).json({
+                    message:"삭제 권한이 없습니다."
+                })
+            }
         } catch (err) {
             console.error(err);
             res.status(500).json({ message: '서버 에러' });

@@ -54,7 +54,6 @@ const defaultValidate = {
   loginUser: [
     body('email')
       .isEmail()
-      .normalizeEmail()
       .withMessage('이메일 형식이 아닙니다. 확인해주세요.'),
     body('password')
       .trim()

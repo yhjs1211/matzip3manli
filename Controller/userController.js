@@ -7,9 +7,9 @@ const validator = require('express-validator');
 const mailsender = require('../mail/mail.js');
 
 module.exports = {
-  create: async (req, res, next) => {
-    const { nickname, name, email, phone, imageURL, password } = req.body;
-    const foundData = await User.findOne({ where: { nickname } });
+  create: async (req, res) => {
+    const { nickname, name, email, phone, imageURL, password, introduce } = req.body;
+    const foundData = await User.findOne({ where: { email } });
     if (!foundData) {
       const hashedPassword = bcrypt.hashSync(password, config.bcrypt.salt);
 
@@ -20,6 +20,7 @@ module.exports = {
         email,
         phone,
         imageURL,
+        introduce
       }).then((d) => {
         return d;
       });
@@ -28,12 +29,13 @@ module.exports = {
     } else {
       return res.status(400).json({
         Success: false,
-        message: '이미 존재하는 닉네임 입니다.',
+        message: '이미 존재하는 E-mail 입니다.',
       });
     }
   },
   login: async (req, res) => {
     const { email, password } = req.body;
+    console.log(email); 
     try {
       const foundData = await User.findOne({ where: { email } });
       const match = bcrypt.compareSync(password, foundData.dataValues.password);
@@ -106,7 +108,7 @@ module.exports = {
   mail: (req, res) => {
     const email = req.body.email;
 
-    const verifyNum = mailsender.sendGmail(email);
+    const verifyNum = mailsender.sendKakaoMail(email);
 
     res.status(200).json({
       verifyNum: `${verifyNum}`,
