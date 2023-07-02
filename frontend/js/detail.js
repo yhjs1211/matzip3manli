@@ -51,7 +51,6 @@ async function postUpdate() {
   const updateContent = prompt('수정할 내용을 입력하세요');
   obj.content = updateContent;
 
-  console.log(obj);
   const option = {
     method: 'PUT',
     headers: {
@@ -231,41 +230,4 @@ function showButton(boolean) {
       document.getElementById('signupBtn').removeAttribute('style');
     document.getElementById('profileBtn').setAttribute('style', 'display:none;');
   }
-}
-
-// 로그인
-async function login() {
-  const obj = {};
-  obj.email = $('#loginEmail').val(); // Uniqe
-  obj.password = $('#loginPw').val();
-  const option = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(obj),
-  };
-
-  try {
-    const fetchedData = await fetch(
-      'http://localhost:3030/users/login',
-      option
-    ).then((d) => {
-      return d.json();
-    });
-    if(fetchedData.errorMessage){
-      alert(`${fetchedData.errorMessage}`);
-    }else{
-      window.localStorage.setItem('Authorization', 'Bearer ' + fetchedData.token);
-      window.location.reload();
-    }
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-// 로그아웃
-async function logout() {
-  window.localStorage.removeItem('Authorization');
-  window.location.reload();
 }

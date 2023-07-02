@@ -45,7 +45,7 @@ async function readyPage(descType = undefined) {
               </div>
               <div class="card-footer">
               <p>
-                  작성자 : ${data.nickname}, 좋아요 : ${data.like}
+                  작성자 : ${data.nickname}<br> 좋아요 : ${data.like}
               </p>
               </div>
             </div>
@@ -115,7 +115,7 @@ async function zoneClick(zone) {
                 </div>
                 <div class="card-footer">
                 <p>
-                    작성자 : ${data.nickname}, 좋아요 : ${data.like}
+                    작성자 : ${data.nickname}<br> 좋아요 : ${data.like}
                 </p>
               </div>
             </div>
